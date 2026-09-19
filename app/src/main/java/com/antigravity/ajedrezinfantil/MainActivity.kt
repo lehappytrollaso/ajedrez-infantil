@@ -607,6 +607,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun playSparkyPawnMove() {
+            if (checkPawnWarsEnd()) return
+
+            val blackMoves = game.getAllLegalMoves(PieceColor.BLACK)
+            if (blackMoves.isEmpty()) {
+                val whiteMoves = game.getAllLegalMoves(PieceColor.WHITE)
+                if (whiteMoves.isEmpty()) {
+                    checkPawnWarsEnd()
+                } else {
+                    game.setTurn(PieceColor.WHITE)
+                    boardView.isInteractive = true
+                    setSparkyMood(ivSparky, SparkyMood.SURPRISED)
+                    tvMessage.text = "¡Sparky está bloqueado! ¡Sigue avanzando tú! 🚀"
+                }
+                return
+            }
+
             isComputerThinking = true
             boardView.isInteractive = false
             setSparkyMood(ivSparky, SparkyMood.THINKING)
@@ -620,6 +636,18 @@ class MainActivity : AppCompatActivity() {
                     SoundEffects.playMove(this)
                     setSparkyMood(ivSparky, SparkyMood.NORMAL)
                     tvMessage.text = "¡Turno tuyo! ¡Avanza hacia la gloria! ✨"
+                    val ended = checkPawnWarsEnd()
+                    if (!ended) {
+                        if (game.getAllLegalMoves(PieceColor.WHITE).isEmpty()) {
+                            if (game.getAllLegalMoves(PieceColor.BLACK).isNotEmpty()) {
+                                tvMessage.text = "¡Tus peones están bloqueados! Sparky mueve de nuevo 🤖"
+                                playSparkyPawnMove()
+                            } else {
+                                checkPawnWarsEnd()
+                            }
+                        }
+                    }
+                } else {
                     checkPawnWarsEnd()
                 }
             }
@@ -703,10 +731,14 @@ class MainActivity : AppCompatActivity() {
         val btnTheme = findViewById<ImageView>(R.id.btnHungryKnightTheme)
         val btnSound = findViewById<ImageView>(R.id.btnHungryKnightSound)
         val btnAction = findViewById<Button>(R.id.btnHungryKnightAction)
+        val containerTools = findViewById<View>(R.id.containerHungryKnightTools)
+        val btnHint = findViewById<View>(R.id.btnHungryKnightHint)
+        val btnUndo = findViewById<View>(R.id.btnHungryKnightUndo)
 
         var currentStage = 1
         val maxStages = 3
         val game = ChessGame()
+        val collectedStarsHistory = mutableListOf<Position?>()
 
         updateSoundIcon(btnSound)
         btnSound.setOnClickListener {
@@ -727,6 +759,8 @@ class MainActivity : AppCompatActivity() {
 
         fun loadStage(stage: Int) {
             btnAction.visibility = View.GONE
+            containerTools.visibility = View.VISIBLE
+            collectedStarsHistory.clear()
             val level = game.setupHungryKnight(stage)
             tvStage.text = "Nivel $stage de $maxStages"
             boardView.setGame(game)
@@ -742,59 +776,87 @@ class MainActivity : AppCompatActivity() {
         }
 
         boardView.onUserMoveListener = { from, to ->
-            if (boardView.lavaPositions.contains(to)) {
-                SoundEffects.playInvalid(this)
-                setSparkyMood(ivSparky, SparkyMood.SURPRISED)
-                tvMessage.text = "¡CUIDADO! ¡Ahí hay lava ardiente! 🔥 Busca otra casilla segura"
-            } else {
-                val moved = game.makeMove(Move(from, to))
-                if (moved) {
-                    if (boardView.tutorialTargetPositions.contains(to)) {
-                        boardView.tutorialTargetPositions = boardView.tutorialTargetPositions - to
-                        boardView.invalidate()
-                        SoundEffects.playStarCollect(this)
-                        setSparkyMood(ivSparky, SparkyMood.SURPRISED)
+            val moved = game.makeMove(Move(from, to))
+            if (moved) {
+                game.setTurn(PieceColor.WHITE) // Never leave turn in BLACK in solo puzzle
+                if (boardView.tutorialTargetPositions.contains(to)) {
+                    collectedStarsHistory.add(to)
+                    boardView.tutorialTargetPositions = boardView.tutorialTargetPositions - to
+                    boardView.invalidate()
+                    SoundEffects.playStarCollect(this)
+                    setSparkyMood(ivSparky, SparkyMood.SURPRISED)
 
-                        val remaining = boardView.tutorialTargetPositions.size
-                        if (remaining > 0) {
-                            tvMessage.text = "¡Estrella comida! Yum yum ⭐ ¡Quedan $remaining!"
+                    val remaining = boardView.tutorialTargetPositions.size
+                    if (remaining > 0) {
+                        tvMessage.text = "¡Estrella comida! Yum yum ⭐ ¡Quedan $remaining!"
+                    } else {
+                        boardView.isInteractive = false
+                        boardView.triggerConfetti()
+                        SoundEffects.playVictory(this)
+                        setSparkyMood(ivSparky, SparkyMood.CELEBRATING)
+                        containerTools.visibility = View.GONE
+
+                        if (currentStage < maxStages) {
+                            tvMessage.text = "¡Nivel $currentStage completado! ¡Eres una saltadora experta! 🦄🎉"
+                            btnAction.text = "¡Siguiente Nivel! ➡️"
+                            btnAction.visibility = View.VISIBLE
+                            btnAction.setOnClickListener {
+                                SoundEffects.playPop(this)
+                                currentStage++
+                                loadStage(currentStage)
+                            }
                         } else {
-                            boardView.isInteractive = false
-                            boardView.triggerConfetti()
-                            SoundEffects.playVictory(this)
-                            setSparkyMood(ivSparky, SparkyMood.CELEBRATING)
-
-                            if (currentStage < maxStages) {
-                                tvMessage.text = "¡Nivel $currentStage completado! ¡Eres una saltadora experta! 🦄🎉"
-                                btnAction.text = "¡Siguiente Nivel! ➡️"
-                                btnAction.visibility = View.VISIBLE
-                                btnAction.setOnClickListener {
-                                    SoundEffects.playPop(this)
-                                    currentStage++
-                                    loadStage(currentStage)
-                                }
-                            } else {
-                                tvMessage.text = "¡FESTÍN COMPLETADO! ¡Has devorado todas las estrellas del reino! 👑🌟"
-                                btnAction.text = "¡Jugar de Nuevo! 🔄"
-                                btnAction.visibility = View.VISIBLE
-                                btnAction.setOnClickListener {
-                                    SoundEffects.playPop(this)
-                                    currentStage = 1
-                                    loadStage(currentStage)
-                                }
+                            tvMessage.text = "¡FESTÍN COMPLETADO! ¡Has devorado todas las estrellas del reino! 👑🌟"
+                            btnAction.text = "¡Jugar de Nuevo! 🔄"
+                            btnAction.visibility = View.VISIBLE
+                            btnAction.setOnClickListener {
+                                SoundEffects.playPop(this)
+                                currentStage = 1
+                                loadStage(currentStage)
                             }
                         }
-                    } else {
-                        SoundEffects.playMove(this)
-                        tvMessage.text = "¡Buen salto! Ahora busca la siguiente estrella ⭐"
                     }
+                } else {
+                    collectedStarsHistory.add(null)
+                    SoundEffects.playMove(this)
+                    tvMessage.text = "¡Buen salto! Ahora busca la siguiente estrella ⭐"
                 }
             }
         }
 
-        boardView.onIllegalMoveListener = {
+        boardView.onIllegalMoveListener = { targetPos ->
             SoundEffects.playInvalid(this)
-            tvMessage.text = "¡El caballo salta en 'L'! 2 pasos rectos y 1 al lado 🦄"
+            if (targetPos != null && boardView.lavaPositions.contains(targetPos)) {
+                setSparkyMood(ivSparky, SparkyMood.SURPRISED)
+                tvMessage.text = "¡CUIDADO! ¡Ahí hay lava ardiente! 🔥 Busca otra casilla segura"
+            } else {
+                tvMessage.text = "¡El caballo salta en 'L'! 2 pasos rectos y 1 al lado 🦄"
+            }
+        }
+
+        btnHint.setOnClickListener {
+            val hint = game.getHungryKnightHint(boardView.tutorialTargetPositions, boardView.lavaPositions)
+            if (hint != null) {
+                boardView.hintMove = hint
+                boardView.invalidate()
+                SoundEffects.playHint(this)
+                tvMessage.text = "¡Pista! Salta hacia ${hint.to.toChessNotation()} para buscar la estrella ⭐"
+            }
+        }
+
+        btnUndo.setOnClickListener {
+            if (game.undo()) {
+                game.setTurn(PieceColor.WHITE)
+                val restored = if (collectedStarsHistory.isNotEmpty()) collectedStarsHistory.removeAt(collectedStarsHistory.size - 1) else null
+                if (restored != null) {
+                    boardView.tutorialTargetPositions = boardView.tutorialTargetPositions + restored
+                }
+                boardView.hintMove = null
+                boardView.selectSquare(null)
+                boardView.invalidate()
+                SoundEffects.playPop(this)
+                tvMessage.text = "¡Salto deshecho! Elige otro camino 🦄"
+            }
         }
 
         btnRestart.setOnClickListener {

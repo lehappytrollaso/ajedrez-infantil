@@ -251,5 +251,53 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
     </table>
   </div>
 
+  <!-- Auditoría Anti-Bloqueos y Pruebas Empíricas -->
+  <div class="main-card">
+    <h2>🛡️ Auditoría Exhaustiva Anti-Bloqueos (Verificación de Cero Frustración)</h2>
+    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Se ha efectuado una inspección estricta paso a paso para garantizar que ningún flujo, minijuego o menú pueda quedar bloqueado o congelado ante jugadas inesperadas:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Escenario Evaluado</th>
+          <th>Causa Raíz Identificada</th>
+          <th>Solución Técnica Blindada</th>
+          <th>Verificación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Festín del Caballo: Saltos sucesivos</b></td>
+          <td><code>makeMove()</code> alternaba el turno a <code>BLACK</code>. Al no haber jugador negro, el caballo blanco quedaba inmovilizado tras el 1.er salto.</td>
+          <td>Inyección de <code>game.setTurn(PieceColor.WHITE)</code> en cada salto, garantizando fluidez ininterrumpida.</td>
+          <td><span class="tag tag-green">Test Unitario OK</span></td>
+        </tr>
+        <tr>
+          <td><b>Guerra de Peones: Coronación en fila meta</b></td>
+          <td><code>checkPawnWarsWinner()</code> comprobaba <code>type == PAWN</code>, pero <code>makeMove()</code> corona el peón a Dama, saltándose el detector de fin de juego.</td>
+          <td>Comprobación de color en fila meta (<code>p0.color == WHITE</code> / <code>p7.color == BLACK</code>) independientemente del tipo de pieza.</td>
+          <td><span class="tag tag-green">Test Unitario OK</span></td>
+        </tr>
+        <tr>
+          <td><b>Guerra de Peones: Bloqueo total (Stalemate)</b></td>
+          <td>Si los peones negros quedaban bloqueados, la IA retornaba <code>null</code> y el juego quedaba atascado en "Sparky pensando...".</td>
+          <td>Si Sparky no puede mover, cede el turno a la niña (<code>setTurn(WHITE)</code>). Si ambos están bloqueados, se compara recuento y finaliza limpiamente.</td>
+          <td><span class="tag tag-green">Test Unitario OK</span></td>
+        </tr>
+        <tr>
+          <td><b>Festín del Caballo: Trampas de lava</b></td>
+          <td>Al tocar lava, se emitía la regla genérica del caballo en vez del aviso de lava porque el listener no recibía la casilla pulsada.</td>
+          <td><code>onIllegalMoveListener(targetPos)</code> detecta si la casilla es lava y activa la advertencia reactiva con cara de sorpresa de Sparky.</td>
+          <td><span class="tag tag-green">Comprobado OK</span></td>
+        </tr>
+        <tr>
+          <td><b>Festín del Caballo: Deshacer y Pista BFS</b></td>
+          <td>Si la niña saltaba a una casilla sin salida, debía reiniciar todo el nivel desde el principio.</td>
+          <td>Añadidos botones "Deshacer ↩️" (restaura estrellas consumidas) y "Pista 💡" (resuelve el camino más corto con BFS evitando lava).</td>
+          <td><span class="tag tag-green">Comprobado OK</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </body>
 </html>

@@ -449,18 +449,32 @@
 
   <!-- Sección 6: Auditoría y Mejoras de Usabilidad Infantil (v1.1) -->
   <div class="main-card">
-    <h2><span>🛠️</span> Auditoría Exhaustiva de Errores y Mejoras de UX Infantil (v1.1)</h2>
+    <h2><span>🛠️</span> Auditoría de Casos Límite y Mejoras Didácticas (v1.1)</h2>
     <div style="font-size: 0.9rem; color: var(--text-main); line-height: 1.7;">
-      <p style="margin-bottom: 10px;">
-        Se realizó una búsqueda técnica y auditoría empírica de casos límite siguiendo los estándares de aplicaciones infantiles de ajedrez (ChessKid, Lichess Learn, Magnus Kingdom):
+      <ul style="padding-left: 20px; margin-bottom: 12px;">
+        <li><b>1. Corrección del Bloqueo por Movimiento Erróneo:</b> El turno se mantiene permanentemente en <code>WHITE</code>, evitando que la pieza se congele. Sparky anima cariñosamente y la pieza regresa automáticamente en 850 ms.</li>
+        <li><b>2. Botón de Pista en Retos Didácticos (Pista 💡):</b> Traza una flecha dorada hacia la estrella objetivo si la niña tiene dudas.</li>
+        <li><b>3. Botón de Reintentar (Reintentar 🔄):</b> Reinicio inmediato del reto en 1 toque.</li>
+        <li><b>4. Despeje de Rayo en Nivel 7:</b> Posición del Rey blanco ajustada a <code>(2, 3)</code> para despejar el mate de la Dama.</li>
+        <li><b>5. Blindaje contra Condiciones de Carrera:</b> Bandera <code>isComputerThinking</code> y control de desincronización en la IA.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Sección 7: Auditoría Avanzada v1.2 - Cero Atascos, Drag & Drop y Ergonomía Infantil -->
+  <div class="main-card" style="border: 2px solid #7E57C2; background: #FAF9FE;">
+    <h2><span>✨</span> Auditoría Avanzada v1.2: Cero Puntos de Frustración, Drag & Drop y Ergonomía Táctil</h2>
+    <div style="font-size: 0.9rem; color: var(--text-main); line-height: 1.7;">
+      <p style="margin-bottom: 12px;">
+        Revisión profunda centrada en la psicología y psicomotricidad de niñas pequeñas (4-9 años), eliminando cualquier escenario donde el juego pudiera parecer atascado, lento o confuso:
       </p>
       <ul style="padding-left: 20px; margin-bottom: 12px;">
-        <li><b>1. Corrección del Bloqueo por Movimiento Erróneo:</b> Cuando la niña movía a una casilla válida que no era la estrella objetivo, el motor alternaba el turno a <code>BLACK</code>, provocando que la pieza blanca dejara de responder a cualquier toque posterior. <i>Solución:</i> El turno se mantiene permanentemente fijado en el color de la niña (<code>WHITE</code>), se reproduce una señal auditiva suave, Sparky anima con un mensaje cariñoso ("¡Casi! Toca la estrella ⭐ o usa la Pista 💡"), y la pieza regresa automáticamente a la posición de inicio en 850 ms sin necesidad de reiniciar el nivel.</li>
-        <li><b>2. Botón de Pista en Retos Didácticos (Pista 💡):</b> Se añadió un botón dedicado en la pantalla del tutorial que calcula el vector hacia la estrella objetivo y traza una flecha dorada luminosa sobre el tablero para orientar a la pequeña si tiene dudas.</li>
-        <li><b>3. Botón de Reintentar en Retos (Reintentar 🔄):</b> Acceso instantáneo en 1 toque para reiniciar el tablero del reto actual en cualquier momento.</li>
-        <li><b>4. Corrección de Rayo Bloqueado en Nivel 7 (Paso 3):</b> En el reto de Jaque Mate, el Rey blanco situado en <code>(2, 4)</code> bloqueaba el rayo vertical de la Dama en <code>(6, 4)</code> hacia <code>(1, 4)</code>. Se ajustó el Rey blanco a <code>(2, 3)</code>, manteniendo la protección del escaque de mate y dejando el carril completamente despejado para el mate de la campeona.</li>
-        <li><b>5. Blindaje contra Condiciones de Carrera en Partida Amistosa:</b> Se implementó la bandera <code>isComputerThinking</code> y la cancelación de llamadas diferidas para impedir que toques repetidos o el botón Deshacer desincronicen el tablero mientras la IA calcula su respuesta. Asimismo, el tablero se desactiva de forma segura al concluir la partida (Jaque Mate o Tablas).</li>
-        <li><b>6. Blindaje de Audio Defensivo:</b> Envoltura global con captura de <code>Throwable</code> en el sintetizador para garantizar cero cierres forzosos ante particularidades de hardware de audio en dispositivos heterogéneos.</li>
+        <li><b>1. Soporte Dual Completo de Arrastre (Drag & Drop) y Toque (Tap-to-Move):</b> Los niños pequeños intentan instintivamente arrastrar las piezas por el tablero. Se implementó detección gestual con elevación dinámica de la pieza (1.15x), sombra suave flotante y fantasma semitransparente en la casilla de origen, compatible al 100% con aceleración por hardware.</li>
+        <li><b>2. Toque Directo Inteligente en la Estrella (Smart Direct Tap):</b> Si la niña toca directamente la estrella objetivo o casilla de destino sin seleccionar previamente la pieza, el motor detecta la única pieza amiga capaz de alcanzarla y ejecuta el movimiento de inmediato, suprimiendo la fricción del clásico paradigma de dos toques.</li>
+        <li><b>3. Restablecimiento Inmediato al Toque (Zero Lag Auto-Reset):</b> Si la niña toca la pantalla mientras la pieza está en animación de retorno tras un movimiento fuera de objetivo, el temporizador de 850 ms se cancela al instante y el tablero se resetea al milisegundo sin esperas forzadas.</li>
+        <li><b>4. Guía Interactiva en Pantallas de Esquema:</b> Tocar el tablero durante los esquemas teóricos activa una respuesta inmediata de Sparky ("¡Mira las flechas! Cuando quieras jugar, pulsa el botón verde abajo 👇") y un pulso animado en el botón de acción para guiar la atención sin frustraciones.</li>
+        <li><b>5. Blindaje de Diálogos Duplicados (Dialog Stacking Prevention):</b> Guarda activa con verificación <code>isShowing</code> y descarte de runnables diferidos en <code>showCelebrationDialog</code> y <code>showVictoryGameDialog</code>, previniendo ventanas emergentes superpuestas por pulsaciones múltiples.</li>
+        <li><b>6. Ergonomía Táctil Infantil (Targets ≥ 54dp):</b> Botones de navegación ampliados a 48dp con 11dp de padding, botones de herramientas ("Pista" y "Reintentar") con <code>minHeight="54dp"</code> y botón principal a 56dp. Tipografía de instrucciones aumentada a 16sp con interlineado generoso para una legibilidad instantánea.</li>
       </ul>
     </div>
   </div>

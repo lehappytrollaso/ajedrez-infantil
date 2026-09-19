@@ -212,6 +212,14 @@ class MainActivity : AppCompatActivity() {
                 boardView.isInteractive = false
                 boardView.invalidate()
 
+                boardView.onSchemeTapListener = {
+                    tvInstruction.text = "¡Mira las flechas! Cuando quieras jugar, pulsa el botón verde abajo 👇"
+                    SoundEffects.playPop()
+                    btnAction.animate().scaleX(1.05f).scaleY(1.05f).setDuration(120).withEndAction {
+                        btnAction.animate().scaleX(1.0f).scaleY(1.0f).setDuration(120).start()
+                    }.start()
+                }
+
                 containerTools.visibility = View.GONE
                 containerAction.visibility = View.VISIBLE
                 btnAction.visibility = View.VISIBLE
@@ -225,6 +233,16 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 // Interactive Practice Challenge!
+                boardView.onSchemeTapListener = null
+                boardView.onPendingResetTapListener = null
+                boardView.onIllegalMoveListener = {
+                    tvInstruction.text = "¡Toca o arrastra hacia los puntitos verdes o la estrella ⭐!"
+                }
+                boardView.onEnemyPieceTappedListener = {
+                    tvInstruction.text = "¡Esa pieza es de Sparky! Mueve tu pieza blanca ✨"
+                    SoundEffects.playPop()
+                }
+
                 containerTools.visibility = View.VISIBLE
                 containerAction.visibility = View.GONE
                 btnAction.visibility = View.GONE
@@ -286,9 +304,11 @@ class MainActivity : AppCompatActivity() {
                                 btnAction.setOnClickListener {
                                     showCelebrationDialog(level)
                                 }
-                                boardView.postDelayed({
+                                val r = Runnable {
                                     showCelebrationDialog(level)
-                                }, 700)
+                                }
+                                pendingCelebrationRunnable = r
+                                boardView.postDelayed(r, 700)
                             }
                         } else {
                             // More targets to collect in this step
@@ -298,7 +318,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     } else {
                         // Moved to a non-target valid square!
-                        // Allow visual movement feedback, but prevent locking turn and auto-reset gently
                         game.makeMove(Move(from, to))
                         game.setTurn(step.pieceColor)
                         boardView.tutorialArrows = emptyList()
@@ -307,9 +326,19 @@ class MainActivity : AppCompatActivity() {
                         boardView.invalidate()
 
                         boardView.isInteractive = false
+                        // Allow immediate reset on tap without waiting 850ms
+                        boardView.onPendingResetTapListener = {
+                            resetRunnable?.let { boardView.removeCallbacks(it) }
+                            resetRunnable = null
+                            boardView.onPendingResetTapListener = null
+                            resetStepBoard()
+                            tvInstruction.text = step.instruction
+                        }
+
                         val r = Runnable {
                             resetStepBoard()
                             tvInstruction.text = step.instruction
+                            boardView.onPendingResetTapListener = null
                         }
                         resetRunnable = r
                         boardView.postDelayed(r, 850)
@@ -321,8 +350,23 @@ class MainActivity : AppCompatActivity() {
         loadStep(currentStepIndex)
     }
 
+    private var activeCelebrationDialog: Dialog? = null
+    private var pendingCelebrationRunnable: Runnable? = null
+
     private fun showCelebrationDialog(level: TutorialLevel) {
+        if (activeCelebrationDialog?.isShowing == true) return
+        pendingCelebrationRunnable?.let {
+            findViewById<View>(R.id.chessBoardTutorial)?.removeCallbacks(it)
+        }
+        pendingCelebrationRunnable = null
+
         val dialog = Dialog(this)
+        activeCelebrationDialog = dialog
+        dialog.setOnDismissListener {
+            if (activeCelebrationDialog == dialog) {
+                activeCelebrationDialog = null
+            }
+        }
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_victory)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -400,6 +444,16 @@ class MainActivity : AppCompatActivity() {
         val game = ChessGame()
         boardView.setGame(game)
         boardView.isInteractive = true
+        boardView.onSchemeTapListener = null
+        boardView.onPendingResetTapListener = null
+        boardView.onEnemyPieceTappedListener = {
+            tvSparky.text = "¡Esa pieza es de Sparky! Toca una de tus piezas blancas ✨"
+            tvStatus.text = "¡Mueve tus piezas blancas! ✨"
+            SoundEffects.playPop()
+        }
+        boardView.onIllegalMoveListener = {
+            tvStatus.text = "¡Esa casilla no es válida! Toca los puntitos verdes o el escudo 🛡️"
+        }
 
         fun updateCapturedDisplay() {
             fun pieceToEmoji(p: Piece): String = when (p.type) {
@@ -591,8 +645,17 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    private var activeVictoryGameDialog: Dialog? = null
+
     private fun showVictoryGameDialog(playerWon: Boolean) {
+        if (activeVictoryGameDialog?.isShowing == true) return
         val dialog = Dialog(this)
+        activeVictoryGameDialog = dialog
+        dialog.setOnDismissListener {
+            if (activeVictoryGameDialog == dialog) {
+                activeVictoryGameDialog = null
+            }
+        }
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_victory)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

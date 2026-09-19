@@ -198,6 +198,6 @@ object SoundEffects {
             Thread.sleep((buffer.size.toDouble() / SAMPLE_RATE * 1000).toLong() + 30)
             audioTrack.stop()
             audioTrack.release()
-        } catch (_: Exception) {}
+        } catch (_: Throwable) {}
     }
 }

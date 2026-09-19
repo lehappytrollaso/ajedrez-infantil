@@ -429,12 +429,40 @@
           <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
         </tr>
         <tr>
+          <td><code>ChessEngineTest.kt</code></td>
+          <td>Prevención de bloqueo de turno en tutoriales (Turn Persistence)</td>
+          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
+        </tr>
+        <tr>
+          <td><code>ChessEngineTest.kt</code></td>
+          <td>Alcanzabilidad matemática de todos los objetivos de reto</td>
+          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
+        </tr>
+        <tr>
           <td><code>aapt dump badging</code></td>
           <td>Package: com.antigravity.ajedrezinfantil, MinSdk 24, TargetSdk 34</td>
           <td><span style="color: #2E7D32; font-weight:700;">VÁLIDO (100%)</span></td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Sección 6: Auditoría y Mejoras de Usabilidad Infantil (v1.1) -->
+  <div class="main-card">
+    <h2><span>🛠️</span> Auditoría Exhaustiva de Errores y Mejoras de UX Infantil (v1.1)</h2>
+    <div style="font-size: 0.9rem; color: var(--text-main); line-height: 1.7;">
+      <p style="margin-bottom: 10px;">
+        Se realizó una búsqueda técnica y auditoría empírica de casos límite siguiendo los estándares de aplicaciones infantiles de ajedrez (ChessKid, Lichess Learn, Magnus Kingdom):
+      </p>
+      <ul style="padding-left: 20px; margin-bottom: 12px;">
+        <li><b>1. Corrección del Bloqueo por Movimiento Erróneo:</b> Cuando la niña movía a una casilla válida que no era la estrella objetivo, el motor alternaba el turno a <code>BLACK</code>, provocando que la pieza blanca dejara de responder a cualquier toque posterior. <i>Solución:</i> El turno se mantiene permanentemente fijado en el color de la niña (<code>WHITE</code>), se reproduce una señal auditiva suave, Sparky anima con un mensaje cariñoso ("¡Casi! Toca la estrella ⭐ o usa la Pista 💡"), y la pieza regresa automáticamente a la posición de inicio en 850 ms sin necesidad de reiniciar el nivel.</li>
+        <li><b>2. Botón de Pista en Retos Didácticos (Pista 💡):</b> Se añadió un botón dedicado en la pantalla del tutorial que calcula el vector hacia la estrella objetivo y traza una flecha dorada luminosa sobre el tablero para orientar a la pequeña si tiene dudas.</li>
+        <li><b>3. Botón de Reintentar en Retos (Reintentar 🔄):</b> Acceso instantáneo en 1 toque para reiniciar el tablero del reto actual en cualquier momento.</li>
+        <li><b>4. Corrección de Rayo Bloqueado en Nivel 7 (Paso 3):</b> En el reto de Jaque Mate, el Rey blanco situado en <code>(2, 4)</code> bloqueaba el rayo vertical de la Dama en <code>(6, 4)</code> hacia <code>(1, 4)</code>. Se ajustó el Rey blanco a <code>(2, 3)</code>, manteniendo la protección del escaque de mate y dejando el carril completamente despejado para el mate de la campeona.</li>
+        <li><b>5. Blindaje contra Condiciones de Carrera en Partida Amistosa:</b> Se implementó la bandera <code>isComputerThinking</code> y la cancelación de llamadas diferidas para impedir que toques repetidos o el botón Deshacer desincronicen el tablero mientras la IA calcula su respuesta. Asimismo, el tablero se desactiva de forma segura al concluir la partida (Jaque Mate o Tablas).</li>
+        <li><b>6. Blindaje de Audio Defensivo:</b> Envoltura global con captura de <code>Throwable</code> en el sintetizador para garantizar cero cierres forzosos ante particularidades de hardware de audio en dispositivos heterogéneos.</li>
+      </ul>
+    </div>
   </div>
 
 </body>

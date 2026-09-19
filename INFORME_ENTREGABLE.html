@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ajedrez Mágico - Aplicación Nativa Android APK</title>
+  <title>Ajedrez Mágico - Entrega Completa de Funcionalidades Didácticas</title>
   <style>
     :root {
       --primary: #7E57C2;
@@ -101,83 +101,58 @@
       margin-top: 8px;
     }
 
-    .pieces-grid {
+    .feature-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 12px;
+      gap: 14px;
       margin-top: 12px;
     }
-    .piece-card {
+    .feature-item {
+      background: #FAF8FD;
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 14px;
-      background: #FAFAFF;
+    }
+    .feature-item h3 {
+      font-size: 0.95rem;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 6px;
     }
-    .piece-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--primary-dark);
-    }
-    .piece-icon {
-      font-size: 1.6rem;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #EDE7F6;
-      border-radius: 10px;
-    }
-    .piece-scheme {
+    .feature-item p {
       font-size: 0.85rem;
       color: var(--text-muted);
-    }
-    .piece-tag {
-      display: inline-block;
-      align-self: flex-start;
-      background: #FFF9C4;
-      color: #795548;
-      font-size: 0.75rem;
-      padding: 2px 8px;
-      border-radius: 8px;
-      font-weight: 600;
-      margin-top: 4px;
+      line-height: 1.4;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
     }
     th, td {
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--border);
+      padding: 10px 12px;
       text-align: left;
+      border-bottom: 1px solid var(--border);
     }
-    th { background: #F3E5F5; color: var(--primary-dark); font-weight: 600; }
-
-    .btn-download {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(45deg, #7E57C2, #9C27B0);
-      color: #FFFFFF;
-      text-decoration: none;
+    th {
+      background: #FAF8FD;
+      color: var(--text-muted);
       font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 24px;
-      font-size: 0.95rem;
-      box-shadow: 0 4px 12px rgba(126,87,194,0.3);
-      transition: transform 0.1s ease;
     }
-    .btn-download:hover { transform: translateY(-1px); }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .tag-green { background: #E8F5E9; color: #2E7D32; }
+    .tag-purple { background: #EDE7F6; color: #5E35B1; }
+    .tag-amber { background: #FFF8E1; color: #F57F17; }
   </style>
 </head>
 <body>
@@ -185,298 +160,95 @@
   <!-- Header Ultra-Compacto (< 70px) -->
   <div class="header-bar">
     <div class="header-title">
-      <span>👑</span> Ajedrez Mágico - APK Nativo Android
+      <span>✨</span> Ajedrez Mágico - Entrega de Nuevas Funcionalidades
     </div>
     <div class="badge-group">
-      <span class="badge badge-apk">APK 5.7 MB</span>
-      <span class="badge badge-success">Target SDK 34</span>
-      <span class="badge badge-kids">Niña Pequeña (4-9 años)</span>
-      <span class="badge badge-vector">Vectores Staunton (Sin IA Slop)</span>
+      <span class="badge badge-apk">Android APK Nativo</span>
+      <span class="badge badge-success">Build OK & Tests 100%</span>
+      <span class="badge badge-kids">Pedagogía Infantil</span>
+      <span class="badge badge-vector">Sin Gamificación Forzada</span>
     </div>
   </div>
 
-  <!-- KPIs de Métricas Clave -->
+  <!-- KPIs de la Entrega -->
   <div class="grid-kpis">
     <div class="kpi-card">
-      <span class="kpi-label">Ubicación del APK Generado</span>
-      <span class="kpi-value" style="font-size:0.95rem; word-break:break-all;">~/antigravity/ajedrez-infantil/AjedrezInfantil.apk</span>
+      <span class="kpi-label">Nuevos Minijuegos Didácticos</span>
+      <span class="kpi-value">2 Modos (Guerra de Peones & Festín)</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-label">Lenguaje & Arquitectura</span>
-      <span class="kpi-value">Kotlin 2.0 / Canvas 60fps</span>
+      <span class="kpi-label">Microexpresiones de Sparky</span>
+      <span class="kpi-value">4 Estados Reactivos con Rebote</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-label">Niveles Didácticos Guiados</span>
-      <span class="kpi-value">7 Niveles con Esquemas ⭐</span>
+      <span class="kpi-label">Paletas de Reinos Mágicos</span>
+      <span class="kpi-value">4 Temas con Persistencia SharedPreferences</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-label">IA Sparky & Asistencia</span>
-      <span class="kpi-value">Pistas 💡 + Deshacer ↩️</span>
+      <span class="kpi-label">Dificultad de Sparky</span>
+      <span class="kpi-value">3 Niveles (Aprendiz, Amigo, Campeona)</span>
     </div>
   </div>
 
-  <!-- Sección 1: Descarga e Instalación -->
+  <!-- Resumen de Funcionalidades Implementadas -->
   <div class="main-card">
-    <h2><span>🚀</span> Instalación Inmediata en Dispositivo o Emulador Android</h2>
-    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
-      El paquete <code>.apk</code> es 100% nativo, compilado y firmado en modo debug para instalación directa en cualquier teléfono o tablet Android con Android 7.0 (API 24) o superior (hasta Android 14/15, API 34+).
-    </p>
-    <a class="btn-download" href="file:///home/josel/antigravity/ajedrez-infantil/AjedrezInfantil.apk">
-      📦 Abrir / Copiar Archivo APK (5.7 MB)
-    </a>
-    
-    <div style="margin-top: 14px;">
-      <div style="font-weight: 600; font-size: 0.85rem; color: var(--primary-dark);">Comando de instalación por cable ADB:</div>
-      <div class="install-box">
-        adb install -r /home/josel/antigravity/ajedrez-infantil/AjedrezInfantil.apk
+    <h2>🎯 Funcionalidades Implementadas (Cero Gamificación Forzada)</h2>
+    <div class="feature-grid">
+      <div class="feature-item">
+        <h3>⚔️ Minijuego: Guerra de Peones</h3>
+        <p>Partida 8 vs 8 peones centrada en entender el avance, la coronación y el bloqueo de peones. El primer peón en cruzar el tablero gana. Incluye deshacer y pistas didácticas.</p>
       </div>
-    </div>
-  </div>
-
-  <!-- Sección 2: Plan Pedagógico de Esquemas y Retos Pieza a Pieza -->
-  <div class="main-card">
-    <h2><span>📚</span> Tutorial Paso a Paso con Esquemas Visuales y Poco Texto</h2>
-    <p style="font-size: 0.9rem; color: var(--text-muted);">
-      Diseñado especialmente para una niña pequeña: sin muros de texto aburridos, con explicaciones esquemáticas de una sola frase, flechas animadas en el tablero y retos interactivos donde la niña mueve la pieza para recoger estrellas mágicas ⭐.
-    </p>
-
-    <div class="pieces-grid">
-      <!-- Peón -->
-      <div class="piece-card">
-        <div class="piece-header">
-          <div class="piece-icon">🛡️</div>
-          <div>1. El Peoncito</div>
-        </div>
-        <div class="piece-scheme">
-          <b>Esquema visual:</b> 1 pasito adelante. Doble salto inicial de 2 casillas. Mordisquito diagonal para comer.
-        </div>
-        <span class="piece-tag">Retos: Pasito ⭐, Salto inicial ⭐⭐, Captura diagonal ⭐⭐⭐</span>
+      <div class="feature-item">
+        <h3>🦄 Minijuego: El Festín del Caballo</h3>
+        <p>Entrenamiento del salto en 'L' en 3 fases de laberinto. La niña debe recoger todas las estrellas doradas ⭐ evitando pisar las casillas con trampas de lava ardiente 🔥.</p>
       </div>
-
-      <!-- Torre -->
-      <div class="piece-card">
-        <div class="piece-header">
-          <div class="piece-icon">🏰</div>
-          <div>2. La Torre Fuerte</div>
-        </div>
-        <div class="piece-scheme">
-          <b>Esquema visual:</b> Vuela en cruz recta (+): arriba, abajo, izquierda y derecha como las murallas del castillo.
-        </div>
-        <span class="piece-tag">Retos: Línea recta al frente ⭐, Vuelo lateral ⭐⭐⭐</span>
+      <div class="feature-item">
+        <h3>🤖 Sparky Reactivo y Expresivo</h3>
+        <p>Mascota con 4 microexpresiones vectoriales: Normal (sonriente), Pensando (ojos concentrados y antena brillante), Sorprendido (abriendo la boca ante capturas/jaques) y Celebrando (ojos felices y confeti).</p>
       </div>
-
-      <!-- Caballo -->
-      <div class="piece-card">
-        <div class="piece-header">
-          <div class="piece-icon">🐴</div>
-          <div>3. El Caballito Saltarín</div>
-        </div>
-        <div class="piece-scheme">
-          <b>Esquema visual:</b> Salto mágico en forma de "L" (2 casillas rectas y 1 al lado). ¡Salta sobre piezas!
-        </div>
-        <span class="piece-tag">Retos: Salto en L ⭐, Salto por encima de peones ⭐⭐⭐</span>
+      <div class="feature-item">
+        <h3>🎨 Paletas de «Reinos Mágicos»</h3>
+        <p>Selector accesible desde barra superior: Fantasía Mágica (Lavanda/Crema), Bosque Esmeralda (Verde/Menta), Reino de Hielo (Azul Ártico) y Mundo Caramelo (Rosa/Vainilla). Guardado en SharedPreferences.</p>
       </div>
-
-      <!-- Alfil -->
-      <div class="piece-card">
-        <div class="piece-header">
-          <div class="piece-icon">🧙‍♂️</div>
-          <div>4. El Alfil del Bosque</div>
-        </div>
-        <div class="piece-scheme">
-          <b>Esquema visual:</b> Tobogán diagonal (X). ¡Nunca cambia de color de casilla (blanco o morado)!
-        </div>
-        <span class="piece-tag">Retos: Tobogán diagonal ⭐, Cruce del tablero ⭐⭐⭐</span>
+      <div class="feature-item">
+        <h3>📳 Respuesta Háptica Suave (18ms)</h3>
+        <p>Vibración háptica táctil con <code>VibrationEffect</code> en movimientos válidos, capturas y recolección de estrellas. Respeto total al botón de silencio para entornos tranquilos.</p>
       </div>
-
-      <!-- Reina -->
-      <div class="piece-card">
-        <div class="piece-header">
-          <div class="piece-icon">👑</div>
-          <div>5. La Reina Valiente</div>
-        </div>
-        <div class="piece-scheme">
-          <b>Esquema visual:</b> Superpoder Torre + Alfil. Líneas rectas y diagonales a donde quiera.
-        </div>
-        <span class="piece-tag">Retos: Vuelo en diagonal ⭐, Rescate del reino ⭐⭐⭐</span>
-      </div>
-
-      <!-- Rey -->
-      <div class="piece-card">
-        <div class="piece-header">
-          <div class="piece-icon">🤴</div>
-          <div>6. El Rey Sabio</div>
-        </div>
-        <div class="piece-scheme">
-          <b>Esquema visual:</b> Da 1 solo pasito en cualquier dirección. ¡El corazón del reino a proteger!
-        </div>
-        <span class="piece-tag">Retos: Pasito recto seguro ⭐, Pasito diagonal ⭐⭐⭐</span>
-      </div>
-
-      <!-- Jaque Mate -->
-      <div class="piece-card">
-        <div class="piece-header">
-          <div class="piece-icon">🎯</div>
-          <div>7. Jaque y Jaque Mate</div>
-        </div>
-        <div class="piece-scheme">
-          <b>Esquema visual:</b> Jaque = "¡Cuidado Rey!". Jaque Mate = "¡Rey sin escapatoria, ganamos la partida!".
-        </div>
-        <span class="piece-tag">Retos: Avisar con Jaque ⭐, El Gran Jaque Mate 🏆🎉</span>
+      <div class="feature-item">
+        <h3>🐣 Dificultad Adaptativa de Sparky</h3>
+        <p>Tres píldoras de 1 clic: <b>Aprendiz</b> (nunca captura damas, alta aleatoriedad), <b>Amigo</b> (juego equilibrado) y <b>Campeona</b> (juego táctico que defiende piezas y busca jaques).</p>
       </div>
     </div>
   </div>
 
-  <!-- Sección 3: Partida Amistosa contra Sparky -->
+  <!-- Detalles de Instalación y Verificación -->
   <div class="main-card">
-    <h2><span>🎮</span> Partida Amistosa contra la Maquinita con Asistencia Inteligente</h2>
-    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
-      Al completar el tutorial, la niña puede jugar partidas completas contra <b>Sparky 🤖</b>, un compañero robot amigable con inteligencia balanceada para niños pequeños:
-    </p>
-    <table>
+    <h2>📦 Descarga e Instalación del APK</h2>
+    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">El APK compilado está listo para su instalación directa en cualquier dispositivo físico o emulador Android (API 24+):</p>
+    <div class="install-box">
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+    </div>
+    <table style="margin-top: 14px;">
       <thead>
         <tr>
-          <th>Función de Ayuda</th>
-          <th>Comportamiento en Pantalla</th>
-          <th>Beneficio para la Niña</th>
+          <th>Archivo</th>
+          <th>Ruta</th>
+          <th>Estado</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><b>Guía de Movimiento</b></td>
-          <td>Al tocar una pieza, las casillas destino brillan con puntos verdes esmeralda y círculos rojos de captura.</td>
-          <td>Aprende jugando sin cometer infracciones ni frustrarse.</td>
+          <td><b>APK Debug Español</b></td>
+          <td><code>ajedrez-infantil/app/build/outputs/apk/debug/app-debug.apk</code></td>
+          <td><span class="tag tag-green">Compilado OK (5.7 MB)</span></td>
         </tr>
         <tr>
-          <td><b>Botón de Pista (💡)</b></td>
-          <td>Dibuja una flecha azul celeste animada señalando la mejor jugada recomendada.</td>
-          <td>Si no sabe qué hacer, Sparky le sugiere un buen movimiento.</td>
-        </tr>
-        <tr>
-          <td><b>Botón Deshacer (↩️)</b></td>
-          <td>Retrocede tanto el movimiento del rival como el propio en 1 clic.</td>
-          <td>Permite corregir descuidos y aprender del error sin castigo.</td>
-        </tr>
-        <tr>
-          <td><b>Aviso de Jaque (⚠️)</b></td>
-          <td>La casilla del rey en peligro emite un suave halo rojizo pulsante.</td>
-          <td>Identifica al instante cuándo su rey necesita protección.</td>
-        </tr>
-        <tr>
-          <td><b>Celebración Final</b></td>
-          <td>Explosión de confeti, fanfarria de victoria y copa dorada de campeona 🏆.</td>
-          <td>Refuerzo positivo que premia su esfuerzo y concentración.</td>
+          <td><b>APK Debug Inglés</b></td>
+          <td><code>magic-chess-kids/app/build/outputs/apk/debug/app-debug.apk</code></td>
+          <td><span class="tag tag-green">Compilado OK (5.7 MB)</span></td>
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <!-- Sección 4: Calidad Visual y Audio Procedural -->
-  <div class="main-card">
-    <h2><span>🎨</span> Gráficos Vectoriales de Alta Calidad & Audio Procedural</h2>
-    <ul style="padding-left: 20px; font-size: 0.9rem; color: var(--text-main); line-height: 1.8;">
-      <li><b>Cero "Slop" de IA:</b> Todas las piezas (Rey, Reina, Torre, Alfil, Caballo, Peón) son vectores matemáticos puros estilo clásico Staunton (SVG/VectorDrawable), garantizando nitidez perfecta en cualquier resolución (pantallas HD, 2K o 4K) sin bordes borrosos ni aberraciones.</li>
-      <li><b>Sintetizador de Sonido Procedural:</b> Implementado en <code>SoundEffects.kt</code> mediante síntesis de ondas senoidales y armónicos sobre <code>AudioTrack</code>. Proporciona efectos táctiles instantáneos (pop al tocar, clack de madera al mover, campanillas al capturar, arpegio de estrellas y fanfarria triunfal de victoria) sin depender de archivos pesados de audio y con 0 ms de retraso.</li>
-      <li><b>Paleta Cálida y Amigable:</b> Lavanda pastel, crema suave, oro miel, rosa coral y verde menta, creando una atmósfera relajante y estimulante para la pequeña.</li>
-    </ul>
-  </div>
-
-  <!-- Sección 5: Verificación de Pruebas Unitarias -->
-  <div class="main-card">
-    <h2><span>🧪</span> Auditoría Técnica y Validación Empírica</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Suite de Pruebas</th>
-          <th>Casos Evaluados</th>
-          <th>Resultado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>ChessEngineTest.kt</code></td>
-          <td>Configuración inicial del tablero, conteo y color de piezas</td>
-          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
-        </tr>
-        <tr>
-          <td><code>ChessEngineTest.kt</code></td>
-          <td>Movimiento del Peón (1 paso, 2 pasos iniciales, capturas)</td>
-          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
-        </tr>
-        <tr>
-          <td><code>ChessEngineTest.kt</code></td>
-          <td>Movimiento del Caballo y salto por encima de piezas</td>
-          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
-        </tr>
-        <tr>
-          <td><code>ChessEngineTest.kt</code></td>
-          <td>Detección rigurosa de Jaque y Jaque Mate (Fool's Mate)</td>
-          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
-        </tr>
-        <tr>
-          <td><code>ChessEngineTest.kt</code></td>
-          <td>Deshacer jugadas (Undo stack) y consistencia de turnos</td>
-          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
-        </tr>
-        <tr>
-          <td><code>ChessEngineTest.kt</code></td>
-          <td>Generación de jugadas de la IA Sparky para niños</td>
-          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
-        </tr>
-        <tr>
-          <td><code>ChessEngineTest.kt</code></td>
-          <td>Integridad del currículum didáctico (7 niveles y retos)</td>
-          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
-        </tr>
-        <tr>
-          <td><code>ChessEngineTest.kt</code></td>
-          <td>Prevención de bloqueo de turno en tutoriales (Turn Persistence)</td>
-          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
-        </tr>
-        <tr>
-          <td><code>ChessEngineTest.kt</code></td>
-          <td>Alcanzabilidad matemática de todos los objetivos de reto</td>
-          <td><span style="color: #2E7D32; font-weight:700;">PASADO (100%)</span></td>
-        </tr>
-        <tr>
-          <td><code>aapt dump badging</code></td>
-          <td>Package: com.antigravity.ajedrezinfantil, MinSdk 24, TargetSdk 34</td>
-          <td><span style="color: #2E7D32; font-weight:700;">VÁLIDO (100%)</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Sección 6: Auditoría y Mejoras de Usabilidad Infantil (v1.1) -->
-  <div class="main-card">
-    <h2><span>🛠️</span> Auditoría de Casos Límite y Mejoras Didácticas (v1.1)</h2>
-    <div style="font-size: 0.9rem; color: var(--text-main); line-height: 1.7;">
-      <ul style="padding-left: 20px; margin-bottom: 12px;">
-        <li><b>1. Corrección del Bloqueo por Movimiento Erróneo:</b> El turno se mantiene permanentemente en <code>WHITE</code>, evitando que la pieza se congele. Sparky anima cariñosamente y la pieza regresa automáticamente en 850 ms.</li>
-        <li><b>2. Botón de Pista en Retos Didácticos (Pista 💡):</b> Traza una flecha dorada hacia la estrella objetivo si la niña tiene dudas.</li>
-        <li><b>3. Botón de Reintentar (Reintentar 🔄):</b> Reinicio inmediato del reto en 1 toque.</li>
-        <li><b>4. Despeje de Rayo en Nivel 7:</b> Posición del Rey blanco ajustada a <code>(2, 3)</code> para despejar el mate de la Dama.</li>
-        <li><b>5. Blindaje contra Condiciones de Carrera:</b> Bandera <code>isComputerThinking</code> y control de desincronización en la IA.</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Sección 7: Auditoría Avanzada v1.2 - Cero Atascos, Drag & Drop y Ergonomía Infantil -->
-  <div class="main-card" style="border: 2px solid #7E57C2; background: #FAF9FE;">
-    <h2><span>✨</span> Auditoría Avanzada v1.2: Cero Puntos de Frustración, Drag & Drop y Ergonomía Táctil</h2>
-    <div style="font-size: 0.9rem; color: var(--text-main); line-height: 1.7;">
-      <p style="margin-bottom: 12px;">
-        Revisión profunda centrada en la psicología y psicomotricidad de niñas pequeñas (4-9 años), eliminando cualquier escenario donde el juego pudiera parecer atascado, lento o confuso:
-      </p>
-      <ul style="padding-left: 20px; margin-bottom: 12px;">
-        <li><b>1. Soporte Dual Completo de Arrastre (Drag & Drop) y Toque (Tap-to-Move):</b> Los niños pequeños intentan instintivamente arrastrar las piezas por el tablero. Se implementó detección gestual con elevación dinámica de la pieza (1.15x), sombra suave flotante y fantasma semitransparente en la casilla de origen, compatible al 100% con aceleración por hardware.</li>
-        <li><b>2. Toque Directo Inteligente en la Estrella (Smart Direct Tap):</b> Si la niña toca directamente la estrella objetivo o casilla de destino sin seleccionar previamente la pieza, el motor detecta la única pieza amiga capaz de alcanzarla y ejecuta el movimiento de inmediato, suprimiendo la fricción del clásico paradigma de dos toques.</li>
-        <li><b>3. Restablecimiento Inmediato al Toque (Zero Lag Auto-Reset):</b> Si la niña toca la pantalla mientras la pieza está en animación de retorno tras un movimiento fuera de objetivo, el temporizador de 850 ms se cancela al instante y el tablero se resetea al milisegundo sin esperas forzadas.</li>
-        <li><b>4. Guía Interactiva en Pantallas de Esquema:</b> Tocar el tablero durante los esquemas teóricos activa una respuesta inmediata de Sparky ("¡Mira las flechas! Cuando quieras jugar, pulsa el botón verde abajo 👇") y un pulso animado en el botón de acción para guiar la atención sin frustraciones.</li>
-        <li><b>5. Blindaje de Diálogos Duplicados (Dialog Stacking Prevention):</b> Guarda activa con verificación <code>isShowing</code> y descarte de runnables diferidos en <code>showCelebrationDialog</code> y <code>showVictoryGameDialog</code>, previniendo ventanas emergentes superpuestas por pulsaciones múltiples.</li>
-        <li><b>6. Ergonomía Táctil Infantil (Targets ≥ 54dp):</b> Botones de navegación ampliados a 48dp con 11dp de padding, botones de herramientas ("Pista" y "Reintentar") con <code>minHeight="54dp"</code> y botón principal a 56dp. Tipografía de instrucciones aumentada a 16sp con interlineado generoso para una legibilidad instantánea.</li>
-      </ul>
-    </div>
   </div>
 
 </body>
